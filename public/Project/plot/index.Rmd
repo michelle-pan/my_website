@@ -1,0 +1,133 @@
+---
+title: "CA_Plot"
+author: "Michelle"
+date: "10/18/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r load-libraries, warning=FALSE, message=FALSE, echo=FALSE}
+library(tidyverse)  # Load ggplot2, dplyr, and all the other tidyverse packages
+library(mosaic)
+library(ggthemes)
+library(ggrepel) # to use ggreple::geom_text_repel()
+library(lubridate)
+library(fivethirtyeight)
+library(here)
+library(skimr)
+library(janitor)
+library(vroom)
+library(tidyquant)
+library(rvest)    # scrape websites
+library(purrr)  
+library(lubridate) # to handle dates
+library(DescTools) # to winsorize data
+library(RColorBrewer)
+library(patchwork)
+library(tidytext)
+```
+
+# Challenge 2: 2016 California Contributors plots
+
+## Plot for top 2 candidates
+
+
+```{r challenge2, echo=FALSE, out.width="100%"}
+knitr::include_graphics(here::here("images", "challenge2.png"), error = FALSE)
+```
+
+```{r}
+# Load data
+contribution <- vroom(here::here("data", "CA_contributors_2016.csv"))
+glimpse(contribution)
+```
+
+```{r}
+# Load data
+zipcode <- vroom(here::here("data", "zip_code_database.csv"))
+```
+
+```{r}
+# Join two dataframes
+zipcode$zip <- as.numeric(zipcode$zip)
+df <- inner_join(contribution,zipcode)
+df
+```
+
+```{r fig.width=8,fig.height=4}
+df %>%
+  filter(cand_nm=="Clinton, Hillary Rodham" | cand_nm=="Trump, Donald J.") %>%
+  group_by(cand_nm,primary_city) %>%
+  summarise(total_contribution=sum(contb_receipt_amt)) %>%
+  group_by(cand_nm) %>%
+  top_n(10) %>%
+  ungroup %>%
+  mutate(cand_nm=as.factor(cand_nm),
+         primary_city=reorder_within(primary_city,total_contribution,cand_nm)) %>%
+  ggplot(aes(primary_city,total_contribution,fill=cand_nm,height=1000))+
+  geom_col(show.legend=FALSE,width=0.5)+
+  facet_wrap(~cand_nm,scales="free")+
+  coord_flip()+
+  scale_x_reordered()+
+  scale_y_continuous(expand=c(0,0))+
+  labs(y="Amount raised",
+       x=NULL,
+       title="Where did candidates raise most money?")
+
+```
+
+
+## Plot for top ten candidates
+
+
+
+```{r}
+# Filter for top ten candidates
+top_10_candidate <- contribution %>%
+  group_by(cand_nm) %>%
+  summarise(total_contribution=sum(contb_receipt_amt)) %>%
+  arrange(desc(total_contribution)) %>%
+  head(10)
+
+top_10_candidate
+```
+
+```{r}
+# Join and only keep top 10 candidates
+df2 <- inner_join(df,top_10_candidate) %>%
+  drop_na(total_contribution)
+# If "total_contribution" is na means this candidate is not top 10, so we just drop it
+unique(df2$cand_nm)
+
+```
+
+```{r}
+top_candidate <- df2 %>%
+  group_by(cand_nm,primary_city) %>%
+  summarise(total_contribution=sum(contb_receipt_amt))
+
+top_candidate
+```
+
+
+
+```{r fig.width=16,fig.height=12}
+top_candidate %>%
+  group_by(cand_nm) %>%
+  top_n(10) %>%
+  ungroup %>%
+  mutate(cand_nm=as.factor(cand_nm),
+         primary_city=reorder_within(primary_city,total_contribution,cand_nm)) %>%
+  ggplot(aes(primary_city,total_contribution,fill=cand_nm))+
+  geom_col(show.legend=FALSE)+
+  facet_wrap(~cand_nm,scales="free")+
+  coord_flip()+
+  scale_x_reordered()+
+  scale_y_continuous(expand=c(0,0))+
+  labs(y="Amount raised",
+       x=NULL,
+       title="Where did candidate raise most money?")
+```

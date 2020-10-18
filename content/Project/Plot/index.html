@@ -1,0 +1,159 @@
+---
+title: "CA_Plot"
+author: "Michelle"
+date: "10/18/2020"
+output: html_document
+---
+
+
+
+<div id="challenge-2-2016-california-contributors-plots" class="section level1">
+<h1>Challenge 2: 2016 California Contributors plots</h1>
+<div id="plot-for-top-2-candidates" class="section level2">
+<h2>Plot for top 2 candidates</h2>
+<p><img src="/Users/michelle/Desktop/Data Analytics for Finance/my_website/images/challenge2.png" width="100%" /></p>
+<pre class="r"><code># Load data
+contribution &lt;- vroom(here::here(&quot;data&quot;, &quot;CA_contributors_2016.csv&quot;))</code></pre>
+<pre><code>## Rows: 1,292,843
+## Columns: 4
+## Delimiter: &quot;,&quot;
+## chr  [1]: cand_nm
+## dbl  [2]: contb_receipt_amt, zip
+## date [1]: contb_date
+## 
+## Use `spec()` to retrieve the guessed column specification
+## Pass a specification to the `col_types` argument to quiet this message</code></pre>
+<pre class="r"><code>glimpse(contribution)</code></pre>
+<pre><code>## Rows: 1,292,843
+## Columns: 4
+## $ cand_nm           &lt;chr&gt; &quot;Clinton, Hillary Rodham&quot;, &quot;Clinton, Hillary Rodham…
+## $ contb_receipt_amt &lt;dbl&gt; 50.00, 200.00, 5.00, 48.33, 40.00, 244.34, 35.00, 1…
+## $ zip               &lt;dbl&gt; 94939, 93428, 92337, 95334, 93011, 95826, 90278, 90…
+## $ contb_date        &lt;date&gt; 2016-04-26, 2016-04-20, 2016-04-02, 2016-11-21, 20…</code></pre>
+<pre class="r"><code># Load data
+zipcode &lt;- vroom(here::here(&quot;data&quot;, &quot;zip_code_database.csv&quot;))</code></pre>
+<pre><code>## Rows: 42,522
+## Columns: 16
+## Delimiter: &quot;,&quot;
+## chr [11]: zip, type, primary_city, acceptable_cities, unacceptable_cities, state, county, ...
+## dbl [ 4]: latitude, longitude, decommissioned, estimated_population
+## 
+## Use `spec()` to retrieve the guessed column specification
+## Pass a specification to the `col_types` argument to quiet this message</code></pre>
+<pre class="r"><code># Join two dataframes
+zipcode$zip &lt;- as.numeric(zipcode$zip)
+df &lt;- inner_join(contribution,zipcode)</code></pre>
+<pre><code>## Joining, by = &quot;zip&quot;</code></pre>
+<pre class="r"><code>df</code></pre>
+<pre><code>## # A tibble: 1,292,843 x 19
+##    cand_nm contb_receipt_a…   zip contb_date type  primary_city acceptable_citi…
+##    &lt;chr&gt;              &lt;dbl&gt; &lt;dbl&gt; &lt;date&gt;     &lt;chr&gt; &lt;chr&gt;        &lt;chr&gt;           
+##  1 Clinto…             50   94939 2016-04-26 STAN… Larkspur     &lt;NA&gt;            
+##  2 Clinto…            200   93428 2016-04-20 STAN… Cambria      &lt;NA&gt;            
+##  3 Clinto…              5   92337 2016-04-02 STAN… Fontana      &lt;NA&gt;            
+##  4 Trump,…             48.3 95334 2016-11-21 STAN… Livingston   &lt;NA&gt;            
+##  5 Sander…             40   93011 2016-03-04 PO B… Camarillo    &lt;NA&gt;            
+##  6 Trump,…            244.  95826 2016-11-24 STAN… Sacramento   &lt;NA&gt;            
+##  7 Sander…             35   90278 2016-03-05 STAN… Redondo Bea… &lt;NA&gt;            
+##  8 Sander…            100   90278 2016-03-06 STAN… Redondo Bea… &lt;NA&gt;            
+##  9 Sander…             25   92084 2016-03-04 STAN… Vista        &lt;NA&gt;            
+## 10 Clinto…             40   92637 2016-04-20 STAN… Laguna Woods Laguna Hills    
+## # … with 1,292,833 more rows, and 12 more variables: unacceptable_cities &lt;chr&gt;,
+## #   state &lt;chr&gt;, county &lt;chr&gt;, timezone &lt;chr&gt;, area_codes &lt;dbl&gt;,
+## #   latitude &lt;dbl&gt;, longitude &lt;dbl&gt;, world_region &lt;chr&gt;, country &lt;chr&gt;,
+## #   decommissioned &lt;dbl&gt;, estimated_population &lt;dbl&gt;, notes &lt;chr&gt;</code></pre>
+<pre class="r"><code>df %&gt;%
+  filter(cand_nm==&quot;Clinton, Hillary Rodham&quot; | cand_nm==&quot;Trump, Donald J.&quot;) %&gt;%
+  group_by(cand_nm,primary_city) %&gt;%
+  summarise(total_contribution=sum(contb_receipt_amt)) %&gt;%
+  group_by(cand_nm) %&gt;%
+  top_n(10) %&gt;%
+  ungroup %&gt;%
+  mutate(cand_nm=as.factor(cand_nm),
+         primary_city=reorder_within(primary_city,total_contribution,cand_nm)) %&gt;%
+  ggplot(aes(primary_city,total_contribution,fill=cand_nm,height=1000))+
+  geom_col(show.legend=FALSE,width=0.5)+
+  facet_wrap(~cand_nm,scales=&quot;free&quot;)+
+  coord_flip()+
+  scale_x_reordered()+
+  scale_y_continuous(expand=c(0,0))+
+  labs(y=&quot;Amount raised&quot;,
+       x=NULL,
+       title=&quot;Where did candidates raise most money?&quot;)</code></pre>
+<pre><code>## `summarise()` regrouping output by &#39;cand_nm&#39; (override with `.groups` argument)</code></pre>
+<pre><code>## Selecting by total_contribution</code></pre>
+<p><img src="/Project/Plot/index_files/figure-html/unnamed-chunk-4-1.png" width="768" /></p>
+</div>
+<div id="plot-for-top-ten-candidates" class="section level2">
+<h2>Plot for top ten candidates</h2>
+<pre class="r"><code># Filter for top ten candidates
+top_10_candidate &lt;- contribution %&gt;%
+  group_by(cand_nm) %&gt;%
+  summarise(total_contribution=sum(contb_receipt_amt)) %&gt;%
+  arrange(desc(total_contribution)) %&gt;%
+  head(10)</code></pre>
+<pre><code>## `summarise()` ungrouping output (override with `.groups` argument)</code></pre>
+<pre class="r"><code>top_10_candidate</code></pre>
+<pre><code>## # A tibble: 10 x 2
+##    cand_nm                   total_contribution
+##    &lt;chr&gt;                                  &lt;dbl&gt;
+##  1 Clinton, Hillary Rodham            94784569.
+##  2 Sanders, Bernard                   20649084.
+##  3 Trump, Donald J.                   14064776.
+##  4 Cruz, Rafael Edward &#39;Ted&#39;           6075175.
+##  5 Rubio, Marco                        5595281.
+##  6 Bush, Jeb                           3357550.
+##  7 Carson, Benjamin S.                 3145278.
+##  8 Kasich, John R.                     1571849.
+##  9 Fiorina, Carly                      1501113.
+## 10 Paul, Rand                           823542.</code></pre>
+<pre class="r"><code># Join and only keep top 10 candidates
+df2 &lt;- inner_join(df,top_10_candidate) %&gt;%
+  drop_na(total_contribution)</code></pre>
+<pre><code>## Joining, by = &quot;cand_nm&quot;</code></pre>
+<pre class="r"><code># If &quot;total_contribution&quot; is na means this candidate is not top 10, so we just drop it
+unique(df2$cand_nm)</code></pre>
+<pre><code>##  [1] &quot;Clinton, Hillary Rodham&quot;   &quot;Trump, Donald J.&quot;         
+##  [3] &quot;Sanders, Bernard&quot;          &quot;Cruz, Rafael Edward &#39;Ted&#39;&quot;
+##  [5] &quot;Bush, Jeb&quot;                 &quot;Rubio, Marco&quot;             
+##  [7] &quot;Kasich, John R.&quot;           &quot;Paul, Rand&quot;               
+##  [9] &quot;Fiorina, Carly&quot;            &quot;Carson, Benjamin S.&quot;</code></pre>
+<pre class="r"><code>top_candidate &lt;- df2 %&gt;%
+  group_by(cand_nm,primary_city) %&gt;%
+  summarise(total_contribution=sum(contb_receipt_amt))</code></pre>
+<pre><code>## `summarise()` regrouping output by &#39;cand_nm&#39; (override with `.groups` argument)</code></pre>
+<pre class="r"><code>top_candidate</code></pre>
+<pre><code>## # A tibble: 6,255 x 3
+## # Groups:   cand_nm [10]
+##    cand_nm   primary_city total_contribution
+##    &lt;chr&gt;     &lt;chr&gt;                     &lt;dbl&gt;
+##  1 Bush, Jeb Agoura Hills              4200 
+##  2 Bush, Jeb Alameda                   1700 
+##  3 Bush, Jeb Alamo                     5400 
+##  4 Bush, Jeb Alhambra                  5400 
+##  5 Bush, Jeb Aliso Viejo               8100 
+##  6 Bush, Jeb Altadena                  5650 
+##  7 Bush, Jeb Anaheim                   9050 
+##  8 Bush, Jeb Arcadia                  31708.
+##  9 Bush, Jeb Atherton                 61400 
+## 10 Bush, Jeb Auburn                    2700 
+## # … with 6,245 more rows</code></pre>
+<pre class="r"><code>top_candidate %&gt;%
+  group_by(cand_nm) %&gt;%
+  top_n(10) %&gt;%
+  ungroup %&gt;%
+  mutate(cand_nm=as.factor(cand_nm),
+         primary_city=reorder_within(primary_city,total_contribution,cand_nm)) %&gt;%
+  ggplot(aes(primary_city,total_contribution,fill=cand_nm))+
+  geom_col(show.legend=FALSE)+
+  facet_wrap(~cand_nm,scales=&quot;free&quot;)+
+  coord_flip()+
+  scale_x_reordered()+
+  scale_y_continuous(expand=c(0,0))+
+  labs(y=&quot;Amount raised&quot;,
+       x=NULL,
+       title=&quot;Where did candidate raise most money?&quot;)</code></pre>
+<pre><code>## Selecting by total_contribution</code></pre>
+<p><img src="/Project/Plot/index_files/figure-html/unnamed-chunk-8-1.png" width="1536" /></p>
+</div>
+</div>

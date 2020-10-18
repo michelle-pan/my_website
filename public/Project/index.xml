@@ -18,6 +18,15 @@
     </item>
     
     <item>
+      <title>CA_Plot</title>
+      <link>/project/plot/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/project/plot/</guid>
+      <description>Challenge 2: 2016 California Contributors plots Plot for top 2 candidates # Load data contribution &amp;lt;- vroom(here::here(&amp;quot;data&amp;quot;, &amp;quot;CA_contributors_2016.csv&amp;quot;)) ## Rows: 1,292,843 ## Columns: 4 ## Delimiter: &amp;quot;,&amp;quot; ## chr [1]: cand_nm ## dbl [2]: contb_receipt_amt, zip ## date [1]: contb_date ## ## Use `spec()` to retrieve the guessed column specification ## Pass a specification to the `col_types` argument to quiet this message glimpse(contribution) ## Rows: 1,292,843 ## Columns: 4 ## $ cand_nm &amp;lt;chr&amp;gt; &amp;quot;Clinton, Hillary Rodham&amp;quot;, &amp;quot;Clinton, Hillary Rodham… ## $ contb_receipt_amt &amp;lt;dbl&amp;gt; 50.</description>
+    </item>
+    
+    <item>
       <title>Resume</title>
       <link>/project/resume/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>

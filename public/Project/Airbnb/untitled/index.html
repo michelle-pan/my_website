@@ -1,0 +1,1439 @@
+<!DOCTYPE HTML>
+<html>
+
+    <head>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+	<meta name="description" content="LBS MFA 2021 Stream B">
+	<meta name="author" content="Xiaoqi Pan">
+	<meta name="generator" content="Hugo 0.76.3" />
+	<title>Airbnb &middot; Portfolio website for Xiaoqi Pan</title>
+	<!-- Stylesheets -->
+	
+	<link rel="stylesheet" href="/css/main.css"/>
+	
+	
+
+	
+
+	<!-- Custom Fonts -->
+	<link href="/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+	
+	<link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+	<link rel="icon" type="image/x-icon" href="/favicon.ico">
+	
+
+	<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+	<!--[if lt IE 9]>
+	<script src="js/ie/html5shiv.js"></script>
+	<script src="js/ie/html5shiv.jsrespond.min.js"></script>
+	<![endif]-->
+</head>
+
+    <body>
+
+    <!-- Wrapper -->
+        <div id="wrapper">
+
+            <!-- Header -->
+    <header id="header" class="alt">
+        <a href="/" class="logo"><strong> Xiaoqi Pan</strong> <span>Welcome to My Website</span></a>
+        <nav>
+            <a href="#menu">Menu</a>
+        </nav>
+    </header>
+
+<!-- Menu -->
+    <nav id="menu">
+        <ul class="links">
+            
+                <li><a href="/">Home</a></li>
+            
+                <li><a href="/blogs">Blogs</a></li>
+            
+                <li><a href="/blogs/ipsum">Generic Blog</a></li>
+            
+                <li><a href="/elements.html">Elements</a></li>
+            
+
+        </ul>
+        <ul class="actions vertical">
+            
+                <li><a href="/blogs" class="button special fit">Get Started</a></li>
+            
+            
+                <li><a href="/" class="button fit">Log In</a></li>
+            
+        </ul>
+    </nav>
+
+        <!-- Main -->
+            <div id="main" class="alt">
+
+                
+                    <section id="one">
+                        <div class="inner">
+                            <header class="major">
+                                <h1>Airbnb</h1>
+                            </header>
+                            
+                            
+
+
+<pre class="r"><code>library(vroom)
+library(tidyverse)</code></pre>
+<pre><code>## Registered S3 methods overwritten by &#39;readr&#39;:
+##   method           from 
+##   format.col_spec  vroom
+##   print.col_spec   vroom
+##   print.collector  vroom
+##   print.date_names vroom
+##   print.locale     vroom
+##   str.col_spec     vroom</code></pre>
+<pre><code>## ── Attaching packages ───────────────────────────────────── tidyverse 1.3.0 ──</code></pre>
+<pre><code>## ✓ ggplot2 3.3.2     ✓ purrr   0.3.4
+## ✓ tibble  3.0.3     ✓ dplyr   1.0.2
+## ✓ tidyr   1.1.2     ✓ stringr 1.4.0
+## ✓ readr   1.3.1     ✓ forcats 0.5.0</code></pre>
+<pre><code>## ── Conflicts ──────────────────────────────────────── tidyverse_conflicts() ──
+## x readr::col_character()  masks vroom::col_character()
+## x readr::col_date()       masks vroom::col_date()
+## x readr::col_datetime()   masks vroom::col_datetime()
+## x readr::col_double()     masks vroom::col_double()
+## x readr::col_factor()     masks vroom::col_factor()
+## x readr::col_guess()      masks vroom::col_guess()
+## x readr::col_integer()    masks vroom::col_integer()
+## x readr::col_logical()    masks vroom::col_logical()
+## x readr::col_number()     masks vroom::col_number()
+## x readr::col_skip()       masks vroom::col_skip()
+## x readr::col_time()       masks vroom::col_time()
+## x readr::cols()           masks vroom::cols()
+## x readr::default_locale() masks vroom::default_locale()
+## x dplyr::filter()         masks stats::filter()
+## x readr::fwf_empty()      masks vroom::fwf_empty()
+## x readr::fwf_positions()  masks vroom::fwf_positions()
+## x dplyr::lag()            masks stats::lag()
+## x readr::locale()         masks vroom::locale()</code></pre>
+<pre class="r"><code>library(skimr)
+listings &lt;- vroom(&quot;http://data.insideairbnb.com/belgium/bru/brussels/2020-06-15/data/listings.csv.gz&quot;)</code></pre>
+<pre><code>## Rows: 8,986
+## Columns: 106
+## Delimiter: &quot;,&quot;
+## chr  [45]: listing_url, name, summary, space, description, experiences_offered, neighborho...
+## dbl  [39]: id, scrape_id, host_id, host_listings_count, host_total_listings_count, zipcode...
+## lgl  [17]: thumbnail_url, medium_url, xl_picture_url, host_is_superhost, host_has_profile_...
+## date [ 5]: last_scraped, host_since, calendar_last_scraped, first_review, last_review
+## 
+## Use `spec()` to retrieve the guessed column specification
+## Pass a specification to the `col_types` argument to quiet this message</code></pre>
+<pre class="r"><code>skim(listings)</code></pre>
+<table>
+<caption><span id="tab:unnamed-chunk-2">Table 1: </span>Data summary</caption>
+<tbody>
+<tr class="odd">
+<td align="left">Name</td>
+<td align="left">listings</td>
+</tr>
+<tr class="even">
+<td align="left">Number of rows</td>
+<td align="left">8986</td>
+</tr>
+<tr class="odd">
+<td align="left">Number of columns</td>
+<td align="left">106</td>
+</tr>
+<tr class="even">
+<td align="left">_______________________</td>
+<td align="left"></td>
+</tr>
+<tr class="odd">
+<td align="left">Column type frequency:</td>
+<td align="left"></td>
+</tr>
+<tr class="even">
+<td align="left">character</td>
+<td align="left">45</td>
+</tr>
+<tr class="odd">
+<td align="left">Date</td>
+<td align="left">5</td>
+</tr>
+<tr class="even">
+<td align="left">logical</td>
+<td align="left">17</td>
+</tr>
+<tr class="odd">
+<td align="left">numeric</td>
+<td align="left">39</td>
+</tr>
+<tr class="even">
+<td align="left">________________________</td>
+<td align="left"></td>
+</tr>
+<tr class="odd">
+<td align="left">Group variables</td>
+<td align="left">None</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Variable type: character</strong></p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">skim_variable</th>
+<th align="right">n_missing</th>
+<th align="right">complete_rate</th>
+<th align="right">min</th>
+<th align="right">max</th>
+<th align="right">empty</th>
+<th align="right">n_unique</th>
+<th align="right">whitespace</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">listing_url</td>
+<td align="right">0</td>
+<td align="right">1.00</td>
+<td align="right">33</td>
+<td align="right">37</td>
+<td align="right">0</td>
+<td align="right">8986</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left">name</td>
+<td align="right">12</td>
+<td align="right">1.00</td>
+<td align="right">1</td>
+<td align="right">217</td>
+<td align="right">0</td>
+<td align="right">8815</td>
+<td align="right">0</td>
+</tr>
+<tr class="odd">
+<td align="left">summary</td>
+<td align="right">409</td>
+<td align="right">0.95</td>
+<td align="right">1</td>
+<td align="right">1000</td>
+<td align="right">0</td>
+<td align="right">8056</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left">space</td>
+<td align="right">3216</td>
+<td align="right">0.64</td>
+<td align="right">1</td>
+<td align="right">1000</td>
+<td align="right">0</td>
+<td align="right">5374</td>
+<td align="right">0</td>
+</tr>
+<tr class="odd">
+<td align="left">description</td>
+<td align="right">291</td>
+<td align="right">0.97</td>
+<td align="right">1</td>
+<td align="right">1000</td>
+<td align="right">0</td>
+<td align="right">8431</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left">experiences_offered</td>
+<td align="right">0</td>
+<td align="right">1.00</td>
+<td align="right">4</td>
+<td align="right">4</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">0</td>
+</tr>
+<tr class="odd">
+<td align="left">neighborhood_overview</td>
+<td align="right">3416</td>
+<td align="right">0.62</td>
+<td align="right">1</td>
+<td align="right">1000</td>
+<td align="right">0</td>
+<td align="right">4758</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left">notes</td>
+<td align="right">6163</td>
+<td align="right">0.31</td>
+<td align="right">1</td>
+<td align="right">1000</td>
+<td align="right">0</td>
+<td align="right">2291</td>
+<td align="right">0</td>
+</tr>
+<tr class="odd">
+<td align="left">transit</td>
+<td align="right">3219</td>
+<td align="right">0.64</td>
+<td align="right">1</td>
+<td align="right">1000</td>
+<td align="right">0</td>
+<td align="right">4950</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left">access</td>
+<td align="right">4864</td>
+<td align="right">0.46</td>
+<td align="right">1</td>
+<td align="right">1000</td>
+<td align="right">0</td>
+<td align="right">3416</td>
+<td align="right">0</td>
+</tr>
+<tr class="odd">
+<td align="left">interaction</td>
+<td align="right">4336</td>
+<td align="right">0.52</td>
+<td align="right">1</td>
+<td align="right">1000</td>
+<td align="right">0</td>
+<td align="right">3797</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left">house_rules</td>
+<td align="right">4852</td>
+<td align="right">0.46</td>
+<td align="right">1</td>
+<td align="right">1000</td>
+<td align="right">0</td>
+<td align="right">3323</td>
+<td align="right">0</td>
+</tr>
+<tr class="odd">
+<td align="left">picture_url</td>
+<td align="right">0</td>
+<td align="right">1.00</td>
+<td align="right">81</td>
+<td align="right">146</td>
+<td align="right">0</td>
+<td align="right">8796</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left">host_url</td>
+<td align="right">0</td>
+<td align="right">1.00</td>
+<td align="right">38</td>
+<td align="right">43</td>
+<td align="right">0</td>
+<td align="right">6233</td>
+<td align="right">0</td>
+</tr>
+<tr class="odd">
+<td align="left">host_name</td>
+<td align="right">4</td>
+<td align="right">1.00</td>
+<td align="right">1</td>
+<td align="right">28</td>
+<td align="right">0</td>
+<td align="right">2888</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left">host_location</td>
+<td align="right">30</td>
+<td align="right">1.00</td>
+<td align="right">2</td>
+<td align="right">70</td>
+<td align="right">0</td>
+<td align="right">616</td>
+<td align="right">0</td>
+</tr>
+<tr class="odd">
+<td align="left">host_about</td>
+<td align="right">4714</td>
+<td align="right">0.48</td>
+<td align="right">1</td>
+<td align="right">6003</td>
+<td align="right">0</td>
+<td align="right">2683</td>
+<td align="right">11</td>
+</tr>
+<tr class="even">
+<td align="left">host_response_time</td>
+<td align="right">4</td>
+<td align="right">1.00</td>
+<td align="right">3</td>
+<td align="right">18</td>
+<td align="right">0</td>
+<td align="right">5</td>
+<td align="right">0</td>
+</tr>
+<tr class="odd">
+<td align="left">host_response_rate</td>
+<td align="right">4</td>
+<td align="right">1.00</td>
+<td align="right">2</td>
+<td align="right">4</td>
+<td align="right">0</td>
+<td align="right">44</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left">host_acceptance_rate</td>
+<td align="right">4</td>
+<td align="right">1.00</td>
+<td align="right">2</td>
+<td align="right">4</td>
+<td align="right">0</td>
+<td align="right">99</td>
+<td align="right">0</td>
+</tr>
+<tr class="odd">
+<td align="left">host_thumbnail_url</td>
+<td align="right">4</td>
+<td align="right">1.00</td>
+<td align="right">55</td>
+<td align="right">106</td>
+<td align="right">0</td>
+<td align="right">6211</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left">host_picture_url</td>
+<td align="right">4</td>
+<td align="right">1.00</td>
+<td align="right">57</td>
+<td align="right">109</td>
+<td align="right">0</td>
+<td align="right">6211</td>
+<td align="right">0</td>
+</tr>
+<tr class="odd">
+<td align="left">host_neighbourhood</td>
+<td align="right">1814</td>
+<td align="right">0.80</td>
+<td align="right">5</td>
+<td align="right">30</td>
+<td align="right">0</td>
+<td align="right">88</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left">host_verifications</td>
+<td align="right">0</td>
+<td align="right">1.00</td>
+<td align="right">2</td>
+<td align="right">170</td>
+<td align="right">0</td>
+<td align="right">210</td>
+<td align="right">0</td>
+</tr>
+<tr class="odd">
+<td align="left">street</td>
+<td align="right">0</td>
+<td align="right">1.00</td>
+<td align="right">11</td>
+<td align="right">71</td>
+<td align="right">0</td>
+<td align="right">191</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left">neighbourhood</td>
+<td align="right">0</td>
+<td align="right">1.00</td>
+<td align="right">5</td>
+<td align="right">21</td>
+<td align="right">0</td>
+<td align="right">49</td>
+<td align="right">0</td>
+</tr>
+<tr class="odd">
+<td align="left">neighbourhood_cleansed</td>
+<td align="right">0</td>
+<td align="right">1.00</td>
+<td align="right">5</td>
+<td align="right">21</td>
+<td align="right">0</td>
+<td align="right">19</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left">city</td>
+<td align="right">71</td>
+<td align="right">0.99</td>
+<td align="right">3</td>
+<td align="right">22</td>
+<td align="right">0</td>
+<td align="right">65</td>
+<td align="right">0</td>
+</tr>
+<tr class="odd">
+<td align="left">state</td>
+<td align="right">104</td>
+<td align="right">0.99</td>
+<td align="right">4</td>
+<td align="right">30</td>
+<td align="right">0</td>
+<td align="right">42</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left">market</td>
+<td align="right">12</td>
+<td align="right">1.00</td>
+<td align="right">5</td>
+<td align="right">21</td>
+<td align="right">0</td>
+<td align="right">6</td>
+<td align="right">0</td>
+</tr>
+<tr class="odd">
+<td align="left">smart_location</td>
+<td align="right">0</td>
+<td align="right">1.00</td>
+<td align="right">11</td>
+<td align="right">39</td>
+<td align="right">0</td>
+<td align="right">78</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left">country_code</td>
+<td align="right">0</td>
+<td align="right">1.00</td>
+<td align="right">2</td>
+<td align="right">2</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">0</td>
+</tr>
+<tr class="odd">
+<td align="left">country</td>
+<td align="right">0</td>
+<td align="right">1.00</td>
+<td align="right">7</td>
+<td align="right">7</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left">property_type</td>
+<td align="right">0</td>
+<td align="right">1.00</td>
+<td align="right">4</td>
+<td align="right">22</td>
+<td align="right">0</td>
+<td align="right">26</td>
+<td align="right">0</td>
+</tr>
+<tr class="odd">
+<td align="left">room_type</td>
+<td align="right">0</td>
+<td align="right">1.00</td>
+<td align="right">10</td>
+<td align="right">15</td>
+<td align="right">0</td>
+<td align="right">4</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left">bed_type</td>
+<td align="right">0</td>
+<td align="right">1.00</td>
+<td align="right">5</td>
+<td align="right">13</td>
+<td align="right">0</td>
+<td align="right">5</td>
+<td align="right">0</td>
+</tr>
+<tr class="odd">
+<td align="left">amenities</td>
+<td align="right">0</td>
+<td align="right">1.00</td>
+<td align="right">2</td>
+<td align="right">1552</td>
+<td align="right">0</td>
+<td align="right">8421</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left">price</td>
+<td align="right">0</td>
+<td align="right">1.00</td>
+<td align="right">5</td>
+<td align="right">9</td>
+<td align="right">0</td>
+<td align="right">253</td>
+<td align="right">0</td>
+</tr>
+<tr class="odd">
+<td align="left">weekly_price</td>
+<td align="right">7833</td>
+<td align="right">0.13</td>
+<td align="right">6</td>
+<td align="right">9</td>
+<td align="right">0</td>
+<td align="right">215</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left">monthly_price</td>
+<td align="right">8053</td>
+<td align="right">0.10</td>
+<td align="right">7</td>
+<td align="right">9</td>
+<td align="right">0</td>
+<td align="right">221</td>
+<td align="right">0</td>
+</tr>
+<tr class="odd">
+<td align="left">security_deposit</td>
+<td align="right">3516</td>
+<td align="right">0.61</td>
+<td align="right">5</td>
+<td align="right">9</td>
+<td align="right">0</td>
+<td align="right">109</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left">cleaning_fee</td>
+<td align="right">2561</td>
+<td align="right">0.72</td>
+<td align="right">5</td>
+<td align="right">7</td>
+<td align="right">0</td>
+<td align="right">83</td>
+<td align="right">0</td>
+</tr>
+<tr class="odd">
+<td align="left">extra_people</td>
+<td align="right">0</td>
+<td align="right">1.00</td>
+<td align="right">5</td>
+<td align="right">7</td>
+<td align="right">0</td>
+<td align="right">54</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left">calendar_updated</td>
+<td align="right">0</td>
+<td align="right">1.00</td>
+<td align="right">5</td>
+<td align="right">13</td>
+<td align="right">0</td>
+<td align="right">77</td>
+<td align="right">0</td>
+</tr>
+<tr class="odd">
+<td align="left">cancellation_policy</td>
+<td align="right">0</td>
+<td align="right">1.00</td>
+<td align="right">8</td>
+<td align="right">27</td>
+<td align="right">0</td>
+<td align="right">5</td>
+<td align="right">0</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Variable type: Date</strong></p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">skim_variable</th>
+<th align="right">n_missing</th>
+<th align="right">complete_rate</th>
+<th align="left">min</th>
+<th align="left">max</th>
+<th align="left">median</th>
+<th align="right">n_unique</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">last_scraped</td>
+<td align="right">0</td>
+<td align="right">1.00</td>
+<td align="left">2020-06-15</td>
+<td align="left">2020-06-19</td>
+<td align="left">2020-06-16</td>
+<td align="right">4</td>
+</tr>
+<tr class="even">
+<td align="left">host_since</td>
+<td align="right">4</td>
+<td align="right">1.00</td>
+<td align="left">2008-08-28</td>
+<td align="left">2020-06-14</td>
+<td align="left">2015-08-12</td>
+<td align="right">2577</td>
+</tr>
+<tr class="odd">
+<td align="left">calendar_last_scraped</td>
+<td align="right">0</td>
+<td align="right">1.00</td>
+<td align="left">2020-06-15</td>
+<td align="left">2020-06-19</td>
+<td align="left">2020-06-16</td>
+<td align="right">4</td>
+</tr>
+<tr class="even">
+<td align="left">first_review</td>
+<td align="right">1609</td>
+<td align="right">0.82</td>
+<td align="left">2010-10-15</td>
+<td align="left">2020-06-14</td>
+<td align="left">2018-06-22</td>
+<td align="right">2040</td>
+</tr>
+<tr class="odd">
+<td align="left">last_review</td>
+<td align="right">1609</td>
+<td align="right">0.82</td>
+<td align="left">2013-03-06</td>
+<td align="left">2020-06-16</td>
+<td align="left">2020-01-04</td>
+<td align="right">1320</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Variable type: logical</strong></p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">skim_variable</th>
+<th align="right">n_missing</th>
+<th align="right">complete_rate</th>
+<th align="right">mean</th>
+<th align="left">count</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">thumbnail_url</td>
+<td align="right">8986</td>
+<td align="right">0</td>
+<td align="right">NaN</td>
+<td align="left">:</td>
+</tr>
+<tr class="even">
+<td align="left">medium_url</td>
+<td align="right">8986</td>
+<td align="right">0</td>
+<td align="right">NaN</td>
+<td align="left">:</td>
+</tr>
+<tr class="odd">
+<td align="left">xl_picture_url</td>
+<td align="right">8986</td>
+<td align="right">0</td>
+<td align="right">NaN</td>
+<td align="left">:</td>
+</tr>
+<tr class="even">
+<td align="left">host_is_superhost</td>
+<td align="right">4</td>
+<td align="right">1</td>
+<td align="right">0.18</td>
+<td align="left">FAL: 7400, TRU: 1582</td>
+</tr>
+<tr class="odd">
+<td align="left">host_has_profile_pic</td>
+<td align="right">4</td>
+<td align="right">1</td>
+<td align="right">1.00</td>
+<td align="left">TRU: 8958, FAL: 24</td>
+</tr>
+<tr class="even">
+<td align="left">host_identity_verified</td>
+<td align="right">4</td>
+<td align="right">1</td>
+<td align="right">0.32</td>
+<td align="left">FAL: 6114, TRU: 2868</td>
+</tr>
+<tr class="odd">
+<td align="left">neighbourhood_group_cleansed</td>
+<td align="right">8986</td>
+<td align="right">0</td>
+<td align="right">NaN</td>
+<td align="left">:</td>
+</tr>
+<tr class="even">
+<td align="left">is_location_exact</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">0.83</td>
+<td align="left">TRU: 7487, FAL: 1499</td>
+</tr>
+<tr class="odd">
+<td align="left">square_feet</td>
+<td align="right">8960</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="left">FAL: 26</td>
+</tr>
+<tr class="even">
+<td align="left">has_availability</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">1.00</td>
+<td align="left">TRU: 8986</td>
+</tr>
+<tr class="odd">
+<td align="left">requires_license</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">0.00</td>
+<td align="left">FAL: 8986</td>
+</tr>
+<tr class="even">
+<td align="left">license</td>
+<td align="right">8986</td>
+<td align="right">0</td>
+<td align="right">NaN</td>
+<td align="left">:</td>
+</tr>
+<tr class="odd">
+<td align="left">jurisdiction_names</td>
+<td align="right">8986</td>
+<td align="right">0</td>
+<td align="right">NaN</td>
+<td align="left">:</td>
+</tr>
+<tr class="even">
+<td align="left">instant_bookable</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">0.45</td>
+<td align="left">FAL: 4954, TRU: 4032</td>
+</tr>
+<tr class="odd">
+<td align="left">is_business_travel_ready</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">0.00</td>
+<td align="left">FAL: 8986</td>
+</tr>
+<tr class="even">
+<td align="left">require_guest_profile_picture</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">0.00</td>
+<td align="left">FAL: 8953, TRU: 33</td>
+</tr>
+<tr class="odd">
+<td align="left">require_guest_phone_verification</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">0.01</td>
+<td align="left">FAL: 8891, TRU: 95</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Variable type: numeric</strong></p>
+<table style="width:100%;">
+<colgroup>
+<col width="27%" />
+<col width="6%" />
+<col width="8%" />
+<col width="7%" />
+<col width="7%" />
+<col width="7%" />
+<col width="7%" />
+<col width="7%" />
+<col width="7%" />
+<col width="7%" />
+<col width="3%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">skim_variable</th>
+<th align="right">n_missing</th>
+<th align="right">complete_rate</th>
+<th align="right">mean</th>
+<th align="right">sd</th>
+<th align="right">p0</th>
+<th align="right">p25</th>
+<th align="right">p50</th>
+<th align="right">p75</th>
+<th align="right">p100</th>
+<th align="left">hist</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">id</td>
+<td align="right">0</td>
+<td align="right">1.00</td>
+<td align="right">2.452660e+07</td>
+<td align="right">12993857.92</td>
+<td align="right">2.352000e+03</td>
+<td align="right">1.346627e+07</td>
+<td align="right">2.500699e+07</td>
+<td align="right">3.671643e+07</td>
+<td align="right">4.379477e+07</td>
+<td align="left">▅▅▅▅▇</td>
+</tr>
+<tr class="even">
+<td align="left">scrape_id</td>
+<td align="right">0</td>
+<td align="right">1.00</td>
+<td align="right">2.020062e+13</td>
+<td align="right">0.00</td>
+<td align="right">2.020062e+13</td>
+<td align="right">2.020062e+13</td>
+<td align="right">2.020062e+13</td>
+<td align="right">2.020062e+13</td>
+<td align="right">2.020062e+13</td>
+<td align="left">▁▁▇▁▁</td>
+</tr>
+<tr class="odd">
+<td align="left">host_id</td>
+<td align="right">0</td>
+<td align="right">1.00</td>
+<td align="right">8.466461e+07</td>
+<td align="right">94296951.25</td>
+<td align="right">2.582000e+03</td>
+<td align="right">1.542563e+07</td>
+<td align="right">4.075871e+07</td>
+<td align="right">1.310769e+08</td>
+<td align="right">3.500208e+08</td>
+<td align="left">▇▂▁▁▁</td>
+</tr>
+<tr class="even">
+<td align="left">host_listings_count</td>
+<td align="right">4</td>
+<td align="right">1.00</td>
+<td align="right">1.192000e+01</td>
+<td align="right">64.67</td>
+<td align="right">0.000000e+00</td>
+<td align="right">1.000000e+00</td>
+<td align="right">1.000000e+00</td>
+<td align="right">3.000000e+00</td>
+<td align="right">7.580000e+02</td>
+<td align="left">▇▁▁▁▁</td>
+</tr>
+<tr class="odd">
+<td align="left">host_total_listings_count</td>
+<td align="right">4</td>
+<td align="right">1.00</td>
+<td align="right">1.192000e+01</td>
+<td align="right">64.67</td>
+<td align="right">0.000000e+00</td>
+<td align="right">1.000000e+00</td>
+<td align="right">1.000000e+00</td>
+<td align="right">3.000000e+00</td>
+<td align="right">7.580000e+02</td>
+<td align="left">▇▁▁▁▁</td>
+</tr>
+<tr class="even">
+<td align="left">zipcode</td>
+<td align="right">195</td>
+<td align="right">0.98</td>
+<td align="right">1.064330e+03</td>
+<td align="right">70.41</td>
+<td align="right">6.320000e+02</td>
+<td align="right">1.000000e+03</td>
+<td align="right">1.050000e+03</td>
+<td align="right">1.070000e+03</td>
+<td align="right">3.090000e+03</td>
+<td align="left">▇▂▁▁▁</td>
+</tr>
+<tr class="odd">
+<td align="left">latitude</td>
+<td align="right">0</td>
+<td align="right">1.00</td>
+<td align="right">5.084000e+01</td>
+<td align="right">0.02</td>
+<td align="right">5.077000e+01</td>
+<td align="right">5.083000e+01</td>
+<td align="right">5.084000e+01</td>
+<td align="right">5.085000e+01</td>
+<td align="right">5.090000e+01</td>
+<td align="left">▁▂▇▃▁</td>
+</tr>
+<tr class="even">
+<td align="left">longitude</td>
+<td align="right">0</td>
+<td align="right">1.00</td>
+<td align="right">4.360000e+00</td>
+<td align="right">0.03</td>
+<td align="right">4.260000e+00</td>
+<td align="right">4.350000e+00</td>
+<td align="right">4.360000e+00</td>
+<td align="right">4.380000e+00</td>
+<td align="right">4.490000e+00</td>
+<td align="left">▁▆▇▂▁</td>
+</tr>
+<tr class="odd">
+<td align="left">accommodates</td>
+<td align="right">0</td>
+<td align="right">1.00</td>
+<td align="right">3.010000e+00</td>
+<td align="right">1.73</td>
+<td align="right">1.000000e+00</td>
+<td align="right">2.000000e+00</td>
+<td align="right">2.000000e+00</td>
+<td align="right">4.000000e+00</td>
+<td align="right">1.600000e+01</td>
+<td align="left">▇▁▁▁▁</td>
+</tr>
+<tr class="even">
+<td align="left">bathrooms</td>
+<td align="right">4</td>
+<td align="right">1.00</td>
+<td align="right">1.180000e+00</td>
+<td align="right">0.57</td>
+<td align="right">0.000000e+00</td>
+<td align="right">1.000000e+00</td>
+<td align="right">1.000000e+00</td>
+<td align="right">1.000000e+00</td>
+<td align="right">3.000000e+01</td>
+<td align="left">▇▁▁▁▁</td>
+</tr>
+<tr class="odd">
+<td align="left">bedrooms</td>
+<td align="right">30</td>
+<td align="right">1.00</td>
+<td align="right">1.220000e+00</td>
+<td align="right">0.85</td>
+<td align="right">0.000000e+00</td>
+<td align="right">1.000000e+00</td>
+<td align="right">1.000000e+00</td>
+<td align="right">1.000000e+00</td>
+<td align="right">3.000000e+01</td>
+<td align="left">▇▁▁▁▁</td>
+</tr>
+<tr class="even">
+<td align="left">beds</td>
+<td align="right">99</td>
+<td align="right">0.99</td>
+<td align="right">1.710000e+00</td>
+<td align="right">1.29</td>
+<td align="right">0.000000e+00</td>
+<td align="right">1.000000e+00</td>
+<td align="right">1.000000e+00</td>
+<td align="right">2.000000e+00</td>
+<td align="right">3.100000e+01</td>
+<td align="left">▇▁▁▁▁</td>
+</tr>
+<tr class="odd">
+<td align="left">guests_included</td>
+<td align="right">0</td>
+<td align="right">1.00</td>
+<td align="right">1.490000e+00</td>
+<td align="right">1.02</td>
+<td align="right">1.000000e+00</td>
+<td align="right">1.000000e+00</td>
+<td align="right">1.000000e+00</td>
+<td align="right">2.000000e+00</td>
+<td align="right">1.600000e+01</td>
+<td align="left">▇▁▁▁▁</td>
+</tr>
+<tr class="even">
+<td align="left">minimum_nights</td>
+<td align="right">0</td>
+<td align="right">1.00</td>
+<td align="right">7.400000e+00</td>
+<td align="right">29.20</td>
+<td align="right">1.000000e+00</td>
+<td align="right">1.000000e+00</td>
+<td align="right">2.000000e+00</td>
+<td align="right">3.000000e+00</td>
+<td align="right">1.000000e+03</td>
+<td align="left">▇▁▁▁▁</td>
+</tr>
+<tr class="odd">
+<td align="left">maximum_nights</td>
+<td align="right">0</td>
+<td align="right">1.00</td>
+<td align="right">7.265200e+02</td>
+<td align="right">534.08</td>
+<td align="right">1.000000e+00</td>
+<td align="right">3.500000e+01</td>
+<td align="right">1.125000e+03</td>
+<td align="right">1.125000e+03</td>
+<td align="right">1.111100e+04</td>
+<td align="left">▇▁▁▁▁</td>
+</tr>
+<tr class="even">
+<td align="left">minimum_minimum_nights</td>
+<td align="right">0</td>
+<td align="right">1.00</td>
+<td align="right">7.300000e+00</td>
+<td align="right">29.10</td>
+<td align="right">1.000000e+00</td>
+<td align="right">1.000000e+00</td>
+<td align="right">2.000000e+00</td>
+<td align="right">3.000000e+00</td>
+<td align="right">1.000000e+03</td>
+<td align="left">▇▁▁▁▁</td>
+</tr>
+<tr class="odd">
+<td align="left">maximum_minimum_nights</td>
+<td align="right">0</td>
+<td align="right">1.00</td>
+<td align="right">7.660000e+00</td>
+<td align="right">29.39</td>
+<td align="right">1.000000e+00</td>
+<td align="right">1.000000e+00</td>
+<td align="right">2.000000e+00</td>
+<td align="right">4.000000e+00</td>
+<td align="right">1.000000e+03</td>
+<td align="left">▇▁▁▁▁</td>
+</tr>
+<tr class="even">
+<td align="left">minimum_maximum_nights</td>
+<td align="right">0</td>
+<td align="right">1.00</td>
+<td align="right">8.042800e+02</td>
+<td align="right">509.94</td>
+<td align="right">1.000000e+00</td>
+<td align="right">9.900000e+01</td>
+<td align="right">1.125000e+03</td>
+<td align="right">1.125000e+03</td>
+<td align="right">1.111100e+04</td>
+<td align="left">▇▁▁▁▁</td>
+</tr>
+<tr class="odd">
+<td align="left">maximum_maximum_nights</td>
+<td align="right">0</td>
+<td align="right">1.00</td>
+<td align="right">8.143700e+02</td>
+<td align="right">504.96</td>
+<td align="right">1.000000e+00</td>
+<td align="right">1.200000e+02</td>
+<td align="right">1.125000e+03</td>
+<td align="right">1.125000e+03</td>
+<td align="right">1.111100e+04</td>
+<td align="left">▇▁▁▁▁</td>
+</tr>
+<tr class="even">
+<td align="left">minimum_nights_avg_ntm</td>
+<td align="right">0</td>
+<td align="right">1.00</td>
+<td align="right">7.490000e+00</td>
+<td align="right">29.25</td>
+<td align="right">1.000000e+00</td>
+<td align="right">1.000000e+00</td>
+<td align="right">2.000000e+00</td>
+<td align="right">3.000000e+00</td>
+<td align="right">1.000000e+03</td>
+<td align="left">▇▁▁▁▁</td>
+</tr>
+<tr class="odd">
+<td align="left">maximum_nights_avg_ntm</td>
+<td align="right">0</td>
+<td align="right">1.00</td>
+<td align="right">8.087400e+02</td>
+<td align="right">505.80</td>
+<td align="right">1.000000e+00</td>
+<td align="right">1.200000e+02</td>
+<td align="right">1.125000e+03</td>
+<td align="right">1.125000e+03</td>
+<td align="right">1.111100e+04</td>
+<td align="left">▇▁▁▁▁</td>
+</tr>
+<tr class="even">
+<td align="left">availability_30</td>
+<td align="right">0</td>
+<td align="right">1.00</td>
+<td align="right">1.205000e+01</td>
+<td align="right">12.96</td>
+<td align="right">0.000000e+00</td>
+<td align="right">0.000000e+00</td>
+<td align="right">5.000000e+00</td>
+<td align="right">2.800000e+01</td>
+<td align="right">3.000000e+01</td>
+<td align="left">▇▁▁▁▅</td>
+</tr>
+<tr class="odd">
+<td align="left">availability_60</td>
+<td align="right">0</td>
+<td align="right">1.00</td>
+<td align="right">2.612000e+01</td>
+<td align="right">26.17</td>
+<td align="right">0.000000e+00</td>
+<td align="right">0.000000e+00</td>
+<td align="right">1.600000e+01</td>
+<td align="right">5.700000e+01</td>
+<td align="right">6.000000e+01</td>
+<td align="left">▇▁▁▂▆</td>
+</tr>
+<tr class="even">
+<td align="left">availability_90</td>
+<td align="right">0</td>
+<td align="right">1.00</td>
+<td align="right">4.066000e+01</td>
+<td align="right">39.21</td>
+<td align="right">0.000000e+00</td>
+<td align="right">0.000000e+00</td>
+<td align="right">3.600000e+01</td>
+<td align="right">8.600000e+01</td>
+<td align="right">9.000000e+01</td>
+<td align="left">▇▁▁▁▆</td>
+</tr>
+<tr class="odd">
+<td align="left">availability_365</td>
+<td align="right">0</td>
+<td align="right">1.00</td>
+<td align="right">1.319800e+02</td>
+<td align="right">140.67</td>
+<td align="right">0.000000e+00</td>
+<td align="right">0.000000e+00</td>
+<td align="right">8.700000e+01</td>
+<td align="right">2.730000e+02</td>
+<td align="right">3.650000e+02</td>
+<td align="left">▇▂▂▁▃</td>
+</tr>
+<tr class="even">
+<td align="left">number_of_reviews</td>
+<td align="right">0</td>
+<td align="right">1.00</td>
+<td align="right">3.004000e+01</td>
+<td align="right">61.39</td>
+<td align="right">0.000000e+00</td>
+<td align="right">1.000000e+00</td>
+<td align="right">7.000000e+00</td>
+<td align="right">2.800000e+01</td>
+<td align="right">7.660000e+02</td>
+<td align="left">▇▁▁▁▁</td>
+</tr>
+<tr class="odd">
+<td align="left">number_of_reviews_ltm</td>
+<td align="right">0</td>
+<td align="right">1.00</td>
+<td align="right">9.290000e+00</td>
+<td align="right">16.66</td>
+<td align="right">0.000000e+00</td>
+<td align="right">0.000000e+00</td>
+<td align="right">2.000000e+00</td>
+<td align="right">1.000000e+01</td>
+<td align="right">1.430000e+02</td>
+<td align="left">▇▁▁▁▁</td>
+</tr>
+<tr class="even">
+<td align="left">review_scores_rating</td>
+<td align="right">1758</td>
+<td align="right">0.80</td>
+<td align="right">9.261000e+01</td>
+<td align="right">8.85</td>
+<td align="right">2.000000e+01</td>
+<td align="right">9.000000e+01</td>
+<td align="right">9.500000e+01</td>
+<td align="right">9.900000e+01</td>
+<td align="right">1.000000e+02</td>
+<td align="left">▁▁▁▁▇</td>
+</tr>
+<tr class="odd">
+<td align="left">review_scores_accuracy</td>
+<td align="right">1766</td>
+<td align="right">0.80</td>
+<td align="right">9.550000e+00</td>
+<td align="right">0.87</td>
+<td align="right">2.000000e+00</td>
+<td align="right">9.000000e+00</td>
+<td align="right">1.000000e+01</td>
+<td align="right">1.000000e+01</td>
+<td align="right">1.000000e+01</td>
+<td align="left">▁▁▁▁▇</td>
+</tr>
+<tr class="even">
+<td align="left">review_scores_cleanliness</td>
+<td align="right">1764</td>
+<td align="right">0.80</td>
+<td align="right">9.220000e+00</td>
+<td align="right">1.09</td>
+<td align="right">2.000000e+00</td>
+<td align="right">9.000000e+00</td>
+<td align="right">1.000000e+01</td>
+<td align="right">1.000000e+01</td>
+<td align="right">1.000000e+01</td>
+<td align="left">▁▁▁▂▇</td>
+</tr>
+<tr class="odd">
+<td align="left">review_scores_checkin</td>
+<td align="right">1766</td>
+<td align="right">0.80</td>
+<td align="right">9.670000e+00</td>
+<td align="right">0.76</td>
+<td align="right">2.000000e+00</td>
+<td align="right">1.000000e+01</td>
+<td align="right">1.000000e+01</td>
+<td align="right">1.000000e+01</td>
+<td align="right">1.000000e+01</td>
+<td align="left">▁▁▁▁▇</td>
+</tr>
+<tr class="even">
+<td align="left">review_scores_communication</td>
+<td align="right">1764</td>
+<td align="right">0.80</td>
+<td align="right">9.640000e+00</td>
+<td align="right">0.80</td>
+<td align="right">2.000000e+00</td>
+<td align="right">9.000000e+00</td>
+<td align="right">1.000000e+01</td>
+<td align="right">1.000000e+01</td>
+<td align="right">1.000000e+01</td>
+<td align="left">▁▁▁▁▇</td>
+</tr>
+<tr class="odd">
+<td align="left">review_scores_location</td>
+<td align="right">1768</td>
+<td align="right">0.80</td>
+<td align="right">9.510000e+00</td>
+<td align="right">0.79</td>
+<td align="right">2.000000e+00</td>
+<td align="right">9.000000e+00</td>
+<td align="right">1.000000e+01</td>
+<td align="right">1.000000e+01</td>
+<td align="right">1.000000e+01</td>
+<td align="left">▁▁▁▁▇</td>
+</tr>
+<tr class="even">
+<td align="left">review_scores_value</td>
+<td align="right">1767</td>
+<td align="right">0.80</td>
+<td align="right">9.250000e+00</td>
+<td align="right">0.95</td>
+<td align="right">2.000000e+00</td>
+<td align="right">9.000000e+00</td>
+<td align="right">9.000000e+00</td>
+<td align="right">1.000000e+01</td>
+<td align="right">1.000000e+01</td>
+<td align="left">▁▁▁▁▇</td>
+</tr>
+<tr class="odd">
+<td align="left">calculated_host_listings_count</td>
+<td align="right">0</td>
+<td align="right">1.00</td>
+<td align="right">5.940000e+00</td>
+<td align="right">14.39</td>
+<td align="right">1.000000e+00</td>
+<td align="right">1.000000e+00</td>
+<td align="right">1.000000e+00</td>
+<td align="right">3.000000e+00</td>
+<td align="right">8.500000e+01</td>
+<td align="left">▇▁▁▁▁</td>
+</tr>
+<tr class="even">
+<td align="left">calculated_host_listings_count_entire_homes</td>
+<td align="right">0</td>
+<td align="right">1.00</td>
+<td align="right">4.640000e+00</td>
+<td align="right">13.59</td>
+<td align="right">0.000000e+00</td>
+<td align="right">0.000000e+00</td>
+<td align="right">1.000000e+00</td>
+<td align="right">2.000000e+00</td>
+<td align="right">8.500000e+01</td>
+<td align="left">▇▁▁▁▁</td>
+</tr>
+<tr class="odd">
+<td align="left">calculated_host_listings_count_private_rooms</td>
+<td align="right">0</td>
+<td align="right">1.00</td>
+<td align="right">1.180000e+00</td>
+<td align="right">4.76</td>
+<td align="right">0.000000e+00</td>
+<td align="right">0.000000e+00</td>
+<td align="right">0.000000e+00</td>
+<td align="right">1.000000e+00</td>
+<td align="right">5.300000e+01</td>
+<td align="left">▇▁▁▁▁</td>
+</tr>
+<tr class="even">
+<td align="left">calculated_host_listings_count_shared_rooms</td>
+<td align="right">0</td>
+<td align="right">1.00</td>
+<td align="right">5.000000e-02</td>
+<td align="right">0.73</td>
+<td align="right">0.000000e+00</td>
+<td align="right">0.000000e+00</td>
+<td align="right">0.000000e+00</td>
+<td align="right">0.000000e+00</td>
+<td align="right">1.500000e+01</td>
+<td align="left">▇▁▁▁▁</td>
+</tr>
+<tr class="odd">
+<td align="left">reviews_per_month</td>
+<td align="right">1609</td>
+<td align="right">0.82</td>
+<td align="right">1.310000e+00</td>
+<td align="right">1.72</td>
+<td align="right">1.000000e-02</td>
+<td align="right">2.100000e-01</td>
+<td align="right">6.000000e-01</td>
+<td align="right">1.650000e+00</td>
+<td align="right">1.334000e+01</td>
+<td align="left">▇▁▁▁▁</td>
+</tr>
+</tbody>
+</table>
+
+                        </div>
+                    </section>
+            <!-- Disqus Inject -->
+                
+            </div>
+            
+        <!-- Footer -->
+            
+                <!-- Footer -->
+    <footer id="footer">
+        <div class="inner">
+            <ul class="icons">
+                
+                    <li><a href="https://www.twitter.com" class="icon alt fa-twitter" target="_blank"><span class="label">Twitter</span></a></li>
+                
+                    <li><a href="https://www.facebook.com" class="icon alt fa-facebook" target="_blank"><span class="label">Facebook</span></a></li>
+                
+                    <li><a href="https://www.instagram.com" class="icon alt fa-instagram" target="_blank"><span class="label">Instagram</span></a></li>
+                
+                    <li><a href="https://www.github.com" class="icon alt fa-github" target="_blank"><span class="label">GitHub</span></a></li>
+                
+                    <li><a href="https://www.linkedin.com" class="icon alt fa-linkedin" target="_blank"><span class="label">LinkedIn</span></a></li>
+                
+            </ul>
+            <ul class="copyright">
+                <li>&copy; Company Name</li>
+                
+                <li>Design:  <a href="https://www.html5up.net">HTML5 UP</a></li>
+                
+            </ul>
+        </div>
+    </footer>
+
+            
+        </div>
+
+    <!-- Scripts -->
+        <!-- Scripts -->
+    <!-- jQuery -->
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/jquery.scrolly.min.js"></script>
+    <script src="/js/jquery.scrollex.min.js"></script>
+    <script src="/js/skel.min.js"></script>
+    <script src="/js/util.js"></script>
+
+    
+
+    <!-- Main JS -->
+    <script src="/js/main.js"></script>
+
+    
+
+    
+
+    </body>
+</html>

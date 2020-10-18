@@ -1,0 +1,93 @@
+---
+title: "Resume"
+author: "Xiaoqi Pan"
+date: "16 October 2020"
+output:
+  html_document:
+    theme: flatly
+    highlight: zenburn
+    number_sections: yes
+    toc: yes
+    toc_float: yes
+    code_folding: show
+---
+
+
+```{r, setup, echo=FALSE}
+knitr::opts_chunk$set(
+  message = FALSE, 
+  warning = FALSE, 
+  tidy=FALSE,     # display code as typed
+  size="small")   # slightly smaller font for code
+options(digits = 3)
+
+# default figure size
+knitr::opts_chunk$set(
+  fig.width=6.75, 
+  fig.height=6.75,
+  fig.align = "center"
+)
+```
+
+
+
+# **Xiaoqi Pan**
+**xpan.mfa2021@london.edu    +44 07529982411**
+
+## EDUCATION
+* 2020 - 2022	**London Business School**, UK
+ 	Reading for Masters in Financial Analysis
+* 2016 - 2020	**The Chinese University of Hong Kong**, HK SAR
+ 	BBA in Professional Accountancy
+Minor in Finance
+Awards: Pilot Mainland Experience Scheme from Ministry of Education
+* 2019 - 2019	**University of North Carolina at Chapel Hill, Kenan-Flagler Business School**, USA
+ 	BBA Exchange Programme
+Awards: Yasumoto International Exchange Scholarship
+ 
+## BUSINESS EXPERIENCE
+### 2020 - 2020	HUATAI SECURITIES GROUP - HUATAI INNOVATION INVESTMENT, Beijing, China
+*Summer Analyst (4 months)*
+
+* Assessed financials and business models of 5+ leading container-based PaaS companies to identify market growth potential and competitive landscape, d eveloped and presented an industry research report to managers
+
+* Evaluated 3 industry leader's strategies by examining 50+ M&A activities in recent years, and brainstormed with team on setting investment strategy to create synergies between Huatai's business and fintech startups
+
+* Composed 100+ pages of investment memos from interviews with potential target company's management team, suppliers, and customers, to assist management in making further decisions
+
+### 2019 - 2020	BAIN & COMPANY, China
+*Part Time Assistant (online, 3 months)*
+
+* Mapped 300 retailers at regional levels to inspect profitability's relationship with ratings and location
+
+*	Composed competitive landscape by making 100+ cold calls to gather competitors' information, further advised clients on pricing and marketing solutions
+
+### 2019 - 2019	LEGEND CAPITAL, Beijing, China
+*Chinese Private Equity Firm with a $7b Fund*
+*Summer Analyst (3 months), TMT and Consumer Products Team*
+ 	
+* Completed a target company’s (valued at $570m) investment feasibility report by estimating market size and industry growth prospects, employing COMP analysis for 10+ benchmarks and performing fundamental analysis
+
+*	Developed research frameworks for 3 industries, by top-down analysis screened 30 companies’ business models and financials, convinced managers of growth potential in cloud-gaming industry, which led them to pursue an acquisition candidate valued at $110 million
+
+*	Performed post-investment service by providing advice on product development and marketing strategies for a $600m portfolio company referring to industry benchmarks
+
+### 2018 - 2018	ESSENCE SECURITIES CO., LTD, Beijing, China
+*Summer Analyst (3 months), Proprietary Trading Department*
+
+*	Evaluated 15+ stocks and fund products through fundamental analysis and assisted in proposing portfolios
+
+*	Investigated dynamics of overall market and 5+ portfolio companies in response to global trade war domestic macro regulation, and industry scandals
+
+*	Managed a machine account by developing a Excel model, collected and summarized funds’ returns on a daily basis to keep fund manager updated on portfolio outcomes
+ 
+## ADDITIONAL INFORMATION
+
+*	Language: Chinese (Native), English (Fluent, Toefl:116), Korean (Basic), Cantonese (Basic)
+
+*	Community Service: Volunteered at Tong Gen Women League to help out 10 new arrival families struggling in Hong Kong by arranging family trips and forums
+
+*	Clubs: Served as Public Relations Manager at CUHK University Professional Enhancement Club, organized 2 Alumni Sharing Seminars and several Club Forums to discuss market insights
+
+*	Software knowledge: Microsoft Office Suite (PowerPoint, Word, and Excel), Experience in SQL, R, SAS
+

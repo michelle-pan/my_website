@@ -1,7 +1,7 @@
 # Site settings
-baseURL = "http://example.org/"
+baseURL = "https://xiaoqipan.netlify.app"
 languageCode = "en-us"
-title = "Forty"
+title = "Portfolio website for Xiaoqi Pan"
 theme = "forty"
 
 # Enter your tracking code to enable Google Analytics
@@ -19,8 +19,8 @@ disqusShortname = ""
   # CSS class.
 
   # Provide your metadata here.
-  name = "Your name"
-  description = "Your description"
+  name = "Xiaoqi Pan"
+  description = "LBS MFA 2021 Stream B"
 
   # Link custom assets relative to /static
   custom_css = []
@@ -37,8 +37,8 @@ disqusShortname = ""
 
   # Navigation Section
   [params.navigation]
-    title = "Forty"
-    subtitle = "By HTML5 Up"
+    title = " Xiaoqi Pan"
+    subtitle = "Welcome to My Website"
     menu = "Menu"
     # Optional logo as brand stored in img/
     # logo = "logo.png"
@@ -81,8 +81,8 @@ disqusShortname = ""
   [params.banner]
     # To change the background image on the homepage banner, replace 'banner.jpg' in
     # the 'static/img' folder.
-    title = "Hi, my name is Forty"
-    subtitle = "A RESPONSIVE SITE TEMPLATE DESIGNED BY HTML5 UP\nAND RELEASED UNDER THE CREATIVE COMMONS."
+    title = "Hi, my name is Michelle Pan"
+    subtitle = "Nice to See You."
     buttonText = "Get Started"
 
 
@@ -92,16 +92,16 @@ disqusShortname = ""
     # Display your showcases here.
     
     [[params.tiles.showcase]]
-      title = "Aliquam"
-      subtitle = "Ipsum Dolor Sit Amet"
+      title = "Resume"
+      subtitle = "Michelle"
       image = "pic01.jpg"
-      url = "blogs/aliquam"
+      url = "project/resume"
 
     [[params.tiles.showcase]]
-      title = "Tempus"
-      subtitle = "Feugiat Amet Tempus"
+      title = "Airbnb Project Study"
+      subtitle = "Final"
       image = "pic02.jpg"
-      url = "blogs/tempus"
+      url = "project/Airbnb"
 
     [[params.tiles.showcase]]
       title = "Magna"
@@ -172,17 +172,17 @@ disqusShortname = ""
     # by copying the corresponding map with frontmatter code.
     [[params.contact.email]]
     title = "Email"
-    email = "example@domain.com"
+    email = "xpan.mfa2021@london.edu"
 
     [[params.contact.phone]]
     title = "Phone"
-    phone = "(000) 000-0000 x1234"
+    phone = "(44) 752 998 2411"
 
     [[params.contact.address]]
     title = "Address"
-    street = "Street"
-    city = "City, ST 00000"
-    country = "Country"
+    street = "Radley House, Park Road"
+    city = "London"
+    country = "United Kingdom"
 
   # Footer section
   [params.footer]

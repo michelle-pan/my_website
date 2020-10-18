@@ -1,0 +1,19 @@
+---
+title: "Airbnb"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(vroom)
+library(tidyverse)
+library(skimr)
+listings <- vroom("http://data.insideairbnb.com/belgium/bru/brussels/2020-06-15/data/listings.csv.gz")
+```
+```{r}
+skim(listings)
+```
+

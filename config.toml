@@ -93,25 +93,25 @@ disqusShortname = ""
     
     [[params.tiles.showcase]]
       title = "Resume"
-      subtitle = "Michelle"
+      subtitle = "Michelle's CV"
       image = "pic01.jpg"
       url = "project/resume"
 
     [[params.tiles.showcase]]
       title = "Airbnb Project Study"
-      subtitle = "Final"
+      subtitle = "What is the cost of spending a night at Brussels?"
       image = "pic02.jpg"
       url = "project/Airbnb"
 
     [[params.tiles.showcase]]
       title = "2016 California Contributors plots"
-      subtitle = "CA_Contributors"
+      subtitle = "Which candidate raised the most money?"
       image = "pic03.jpg"
       url = "project/Plot"
 
     [[params.tiles.showcase]]
       title = "Yield Curve Inversion"
-      subtitle = "Analysis"
+      subtitle = "Financial Analysis"
       image = "pic04.jpg"
       url = "project/yield_curve"
 

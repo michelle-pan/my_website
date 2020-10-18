@@ -30,14 +30,9 @@ library(patchwork)
 library(tidytext)
 ```
 
-# Challenge 2: 2016 California Contributors plots
+# 2016 California Contributors plots
 
 ## Plot for top 2 candidates
-
-
-```{r challenge2, echo=FALSE, out.width="100%"}
-knitr::include_graphics(here::here("images", "challenge2.png"), error = FALSE)
-```
 
 ```{r}
 # Load data

@@ -66,6 +66,16 @@ summary(cars) ## speed dist ## Min. : 4.0 Min. : 2.00 ## 1st Qu.:12.0 1st Qu.: 2
     </item>
     
     <item>
+      <title>Biography</title>
+      <link>/project/biography/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/project/biography/</guid>
+      <description>My Biography Born in a small Chinese city called Taiyuan on Dec 6th 1997, I later moved to Texas, United States with my parents, and spent two years of my childhood there. We moved back to Beijing after I was six years old.
+Education I attended primary school, middle school and high school at public schools in Beijing. After taking the National College Entrance Exam, I ranked 466 among 70,000 students in Beijing, and got accepted into the Chinese University of Hong Kong Business School for my undergraduate studies.</description>
+    </item>
+    
+    <item>
       <title>CA_Plot</title>
       <link>/project/plot/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
@@ -82,6 +92,16 @@ summary(cars) ## speed dist ## Min. : 4.0 Min. : 2.00 ## 1st Qu.:12.0 1st Qu.: 2
       <guid>/project/resume/</guid>
       <description>Xiaoqi Pan xpan.mfa2021@london.edu +44 07529982411
 EDUCATION  2020 - 2022 London Business School, UK Reading for Masters in Financial Analysis 2016 - 2020 The Chinese University of Hong Kong, HK SAR BBA in Professional Accountancy Minor in Finance Awards: Pilot Mainland Experience Scheme from Ministry of Education 2019 - 2019 University of North Carolina at Chapel Hill, Kenan-Flagler Business School, USA BBA Exchange Programme Awards: Yasumoto International Exchange Scholarship   BUSINESS EXPERIENCE 2020 - 2020 HUATAI SECURITIES GROUP - HUATAI INNOVATION INVESTMENT, Beijing, China Summer Analyst (4 months)</description>
+    </item>
+    
+    <item>
+      <title>Yield_Curve_Inversion</title>
+      <link>/project/yield_curve/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/project/yield_curve/</guid>
+      <description>Yield Curve inversion Every so often, we hear warnings from commentators on the “inverted yield curve” and its predictive power with respect to recessions. An explainer what a inverted yield curve is can be found here. If you’d rather listen to something, here is a great podcast from NPR on yield curve indicators
+In addition, many articles and commentators think that, e.g., Yield curve inversion is viewed as a harbinger of recession.</description>
     </item>
     
   </channel>

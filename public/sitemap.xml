@@ -77,6 +77,10 @@
   </url>
   
   <url>
+    <loc>/project/biography/</loc>
+  </url>
+  
+  <url>
     <loc>/project/plot/</loc>
   </url>
   
@@ -86,6 +90,10 @@
   
   <url>
     <loc>/project/resume/</loc>
+  </url>
+  
+  <url>
+    <loc>/project/yield_curve/</loc>
   </url>
   
 </urlset>

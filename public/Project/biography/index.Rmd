@@ -1,0 +1,23 @@
+---
+title: "Biography"
+author: "Michelle"
+date: "10/18/2020"
+output: html_document
+---
+
+# My Biography
+
+Born in a small Chinese city called [Taiyuan](https://www.britannica.com/place/Taiyuan) on *Dec 6th 1997*, I later moved to Texas, United States with my parents, and spent two years of my childhood there. We moved back to Beijing after I was six years old.
+
+## Education
+
+I attended primary school, middle school and high school at public schools in Beijing. After taking the National College Entrance Exam, I ranked 466 among 70,000 students in Beijing, and got accepted into the *Chinese University of Hong Kong Business School* for my undergraduate studies. My major was professional accountancy. I entered *London Business School*'s Master in Financial Analysis program in September 2020.
+
+## Hobbies
+
+* Music: K-Pop fan, also interested in Chinese rock bands
+* Reading: Love science fictions, recent favorite book is **The Three Body Problem** by Cixin Liu 
+* Travelling: Have been to Europe, most parts of East Asia and the US, planning to visit Southeast Asaian islands soon
+
+## Languages
+I can speak Chinese Mandarin and Catonese, as well as basic Korean and German.

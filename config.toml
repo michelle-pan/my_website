@@ -104,7 +104,7 @@ disqusShortname = ""
       url = "project/Airbnb"
 
     [[params.tiles.showcase]]
-      title = "Plot"
+      title = "2016 California Contributors plots"
       subtitle = "CA_Contributors"
       image = "pic03.jpg"
       url = "project/Plot"
